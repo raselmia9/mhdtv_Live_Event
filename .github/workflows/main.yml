@@ -1,28 +1,27 @@
-name: Scrape MHD TV Matches
+name: Update Match Data
 
 on:
-  scheduled:
-    - cron: '*/30 * * * *' # প্রতি ৩০ মিনিট পর পর অটো আপডেট হবে (আপনার প্রয়োজনমতো সময় পরিবর্তন করতে পারেন)
-  workflow_dispatch: # ম্যানুয়ালি রান করার অপশন
+  schedule:
+    - cron: '*/30 * * * *'  # প্রতি ৩০ মিনিট পর পর রান হবে
+  workflow_dispatch:        # ম্যানুয়ালি রান করার জন্য
 
 jobs:
-  scrape:
+  update-data:
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: write
 
     steps:
-      - name: Check out repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
@@ -30,9 +29,9 @@ jobs:
       - name: Run Python Script
         run: python main.py
 
-      - name: Commit and push changes if any
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
           git add matches.json
-          git diff --quiet && git diff --cached --quiet || (git commit -m "Auto-update match data [skip ci]" && git push)
+          git diff --quiet && git diff --cached --quiet || (git commit -m "Auto-update matches.json [skip ci]" && git push)
