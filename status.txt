@@ -1,11 +1,11 @@
 🎨 MHD TV Scraper Colorful Status Dashboard 🎨
 =============================================
 
-🔵 Starting scraper... Target URL: https://live.mhdtv.online/
+🔵 Starting full-body dump script... Target URL: https://live.mhdtv.online/
 🟡 Launching browser...
 🟡 Navigating to https://live.mhdtv.online/...
 🟡 Waiting 8 seconds for full JavaScript and match cards to render...
 🟢 Page loaded! HTML content length: 118 characters.
-🔵 Total potential match cards detected with new selector: 0
+🔴 WARNING: Page content is too short! Raw content: <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"></head><body><p>Anonymous Proxy detected.</p></body></html>
 🔵 Browser closed gracefully.
-🟢 Execution finished! Total matches successfully saved to matches.json: 0
+🟢 Execution finished!
