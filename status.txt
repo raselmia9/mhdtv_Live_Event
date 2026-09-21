@@ -1,11 +1,40 @@
-🎨 MHD TV Scraper Colorful Status Dashboard 🎨
+🎨 MHD TV API Sniffer Dashboard 🎨
 =============================================
 
-🔵 Starting streamlined scraper...
-🟡 Launching Chromium browser...
+🔵 Starting API Sniffer script...
+🟡 Launching browser...
 🟡 Navigating to https://live.mhdtv.online/...
-🟡 Waiting 6 seconds for page content...
-🟢 Page loaded! HTML content length: 118 characters.
-🔴 BLOCK DETECTED: Target server blocked the runner IP.
+🟡 Waiting 8 seconds to capture background API calls...
+🟢 Page processed. Total network requests captured: 61
+🔴 Frontend blocked, let's inspect captured API/JSON endpoints:
+
+--- CAPTURED API ENDPOINTS & JSON RESPONSES ---
+No direct JSON APIs found. Listing all requested URLs:
+https://live.mhdtv.online/
+https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&family=Stack+Sans+Notch:wght@200..700&display=swap
+https://live.mhdtv.online/build/assets/app-DwOxQ0aW.css
+https://live.mhdtv.online/build/assets/app-B3LTBHDJ.js
+https://www.googletagmanager.com/gtag/js?id=G-BQQ39J7YLY
+https://mg.livyersroue.com/rOaZ2Mr8TId/ANLEJ
+https://live.mhdtv.online/storage/images/events/xIFRNnWanelZx6K3a52ycHrrxkRN9WsaUljIXHbd.png
+https://live.mhdtv.online/storage/images/events/7FgA1xTx7p7lpM88UuzCaJ3rXX7vJUHTcBPBij2E.png
+https://live.mhdtv.online/storage/images/events/EbBuJI8hu3fmTHpZhEagQ5ady6cDDpIULjo6nVn3.png
+https://live.mhdtv.online/storage/images/events/jo619s7ts5U8ZWiamakbqiiTE9U1livGWyQ3yBxx.png
+https://live.mhdtv.online/storage/images/events/e824seTj9kzrgkgKx1dUTrNMREOqP0j00cwdt8sz.png
+https://live.mhdtv.online/storage/images/events/1aNzcUEsLdyNktMh4dSDgB5JL8K6eQGknuInLtPr.png
+https://live.mhdtv.online/storage/images/events/WfXb4N3REdhbWKMU5j2PoYcO1ZG6rh51pCDmrcnz.png
+https://live.mhdtv.online/storage/images/events/GukBL0Tp1NEbv7Xa83NsFpe2SJmK81cPP0CkFj62.png
+https://live.mhdtv.online/storage/images/events/GVk3TWdOkA21HvcNkVCtbvTSLhxFJRHJXHfi1NhJ.png
+https://live.mhdtv.online/storage/images/events/wTr6fOtZDwSkk9J8FotVd1gWQQsyDQqypEVjkYKk.png
+https://live.mhdtv.online/storage/images/events/cBziVBKbBa70A8nUm3Om36hLNkWaEQ6WkC8fLFG7.png
+https://live.mhdtv.online/storage/images/events/4AG9cDDNB4Gm9IIfUmHn6aPbJkKzQg5FrT3EKJRW.png
+https://live.mhdtv.online/storage/images/events/nd7KQmpUd7Fmxn1w5AFZtijcl4BX1fKQLGeETrXF.png
+https://live.mhdtv.online/storage/images/events/i2Is3NkrdMLNcqQeqLlJ5rjBxzw5R9tlB248bBXk.png
+https://live.mhdtv.online/storage/images/events/BCh1p98GzbZnAF0xGHJ7dMUAEyRrmntQkafd09Le.png
+https://live.mhdtv.online/storage/images/events/dY5FjpldSPhX19YRednHXmjqV0Rl14IKVyq2Guz4.png
+https://live.mhdtv.online/storage/images/events/K1oXiemE18A0aiRnJT8QP7jmRNBWgjQuOjB5GUVL.png
+https://live.mhdtv.online/storage/images/events/fEzk1wHMuZaZgJrbPNdFomCQcGlkztF5R5ozzZtV.png
+https://live.mhdtv.online/storage/images/events/bhdHoHWHOdfvtC8U2u3YlOaS9SDyiZurPDbVrm13.png
+-----------------------------------------------
 🔵 Browser closed.
-🟢 Execution finished! Saved matches: 0
+🟢 Execution finished!
