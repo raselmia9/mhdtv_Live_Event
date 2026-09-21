@@ -1,55 +1,105 @@
 import json
-import requests
-from bs4 import BeautifulSoup
+import os
+from datetime import datetime
+from playwright.sync_api import sync_playwright
+
+def write_status(color_dot, message):
+    """কালারফুল ডটসহ স্ট্যাটাস বা লগ লেখার ফাংশন"""
+    log_line = f"{color_dot} {message}"
+    print(log_line)
+    with open("status.txt", "a", encoding="utf-8") as f:
+        f.write(log_line + "\n")
 
 def scrape_mhd_tv():
+    # স্ক্রিপ্ট শুরু হওয়ার সময় status.txt ফাইলটি ফ্রেশ করে নেওয়া
+    with open("status.txt", "w", encoding="utf-8") as f:
+        f.write("🎨 MHD TV Scraper Colorful Status Dashboard 🎨\n")
+        f.write("=" * 45 + "\n\n")
+
     url = "https://live.mhdtv.online/"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    }
-    
     matches_data = []
-    
-    try:
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'html.parser')
+
+    write_status("🔵", f"Starting automation script... Target URL: {url}")
+
+    with sync_playwright() as p:
+        try:
+            write_status("🟡", "Launching Chromium browser in headless mode...")
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page(
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            )
             
-            # ওয়েবসাইটের কার্ড স্ট্রাকচার অনুযায়ী প্রতিটি ম্যাচের কার্ড সিলেক্ট করা
-            # (নোট: ওয়েবসাইটের আসল HTML ক্লাস নেম বা ট্যাগ অনুযায়ী নিচে সিলেক্টর অ্যাডজাস্ট করা হতে পারে)
-            match_cards = soup.find_all('div', class_='match-card') # উদাহরণের জন্য ক্লাস নেম দেওয়া হয়েছে
+            write_status("🟡", f"Navigating to {url}...")
+            page.goto(url, timeout=60000)
             
-            for card in match_cards:
+            write_status("🟡", "Waiting 6 seconds for page and JavaScript contents to render...")
+            page.wait_for_timeout(6000)
+            
+            page_content = page.content()
+            write_status("🟢", f"Page loaded successfully! HTML content length: {len(page_content)} characters.")
+
+            # সম্ভাব্য ম্যাচ কার্ডগুলো খোঁজা
+            match_cards = page.locator("div.match-card, div.card, div[class*='match']").all()
+            write_status("🔵", f"Total potential match cards detected: {len(match_cards)}")
+
+            if len(match_cards) == 0:
+                write_status("🔴", "WARNING: No match cards found! Selectors might need adjustment or site structure changed.")
+                write_status("⚪", f"Page body snippet: {page.inner_text('body')[:250]}...")
+
+            for index, card in enumerate(match_cards):
                 try:
-                    # ইভেন্টের নাম বা লিগ টাইটেল
-                    event_title = card.find('div', class_='event-title').get_text(strip=True) if card.find('div', class_='event-title') else "CRICKET MATCH"
+                    write_status("⚪", f"--- Processing Card Item #{index + 1} ---")
                     
-                    # খেলার সময়
-                    match_time = card.find('div', class_='match-time').get_text(strip=True) if card.find('div', class_='match-time') else ""
-                    
-                    # টিম ১ এর তথ্য
-                    team1_elem = card.find('div', class_='team-1')
-                    team1_title = team1_elem.find('span', class_='team-name').get_text(strip=True) if team1_elem and team1_elem.find('span', class_='team-name') else "Team 1"
-                    team1_logo = team1_elem.find('img')['src'] if team1_elem and team1_elem.find('img') else ""
-                    
-                    # টিম ২ এর তথ্য
-                    team2_elem = card.find('div', class_='team-2')
-                    team2_title = team2_elem.find('span', class_='team-name').get_text(strip=True) if team2_elem and team2_elem.find('span', class_='team-name') else "Team 2"
-                    team2_logo = team2_elem.find('img')['src'] if team2_elem and team2_elem.find('img') else ""
-                    
-                    # স্ট্রিমিং লিঙ্কগুলো সংগ্রহ করে আপনার কাঙ্ক্ষিত ফরম্যাটে সাজানো: ChannelName,,StreamLink,)
+                    # ইভেন্টের নাম
+                    try:
+                        event_title = card.locator("div[class*='event'], div[class*='league'], span[class*='title']").first.inner_text().strip()
+                    except:
+                        event_title = "CRICKET MATCH"
+
+                    # ম্যাচের সময়
+                    try:
+                        match_time = card.locator("div[class*='time'], span[class*='date']").first.inner_text().strip()
+                    except:
+                        match_time = ""
+
+                    # টিম ১
+                    try:
+                        team1_title = card.locator("div[class*='team1'] span, div[class*='home'] span").first.inner_text().strip()
+                    except:
+                        team1_title = "Team 1"
+
+                    try:
+                        team1_logo = card.locator("div[class*='team1'] img, div[class*='home'] img").first.get_attribute("src")
+                    except:
+                        team1_logo = ""
+
+                    # টিম ২
+                    try:
+                        team2_title = card.locator("div[class*='team2'] span, div[class*='away'] span").first.inner_text().strip()
+                    except:
+                        team2_title = "Team 2"
+
+                    try:
+                        team2_logo = card.locator("div[class*='team2'] img, div[class*='away'] img").first.get_attribute("src")
+                    except:
+                        team2_logo = ""
+
+                    # স্ট্রিমিং লিঙ্ক
                     streams = []
-                    stream_elements = card.find_all('a', class_='stream-link') # স্ট্রিম লিংকের ট্যাগ
-                    for stream in stream_elements:
-                        channel_name = stream.get_text(strip=True)
-                        stream_url = stream.get('href', '')
-                        if channel_name and stream_url:
-                            streams.append(f"{channel_name},,{stream_url}")
-                    
-                    # যদি একাধিক লিংক থাকে তবে আপনার ফরম্যাট অনুযায়ী জোড়া লাগানো
+                    try:
+                        stream_elements = card.locator("a[class*='stream'], button[class*='stream'], a[href*='m3u8']").all()
+                        for stream in stream_elements:
+                            ch_name = stream.inner_text().strip()
+                            ch_url = stream.get_attribute("href") or ""
+                            if ch_url:
+                                if not ch_name:
+                                    ch_name = "Stream"
+                                streams.append(f"{ch_name},,{ch_url}")
+                    except:
+                        pass
+
                     stream_link_str = ",) ".join(streams) if streams else ""
-                    
-                    # ডিকশনারি আকারে লিস্টে যুক্ত করা
+
                     match_item = {
                         "eventTitle": event_title,
                         "matchTime": match_time,
@@ -60,22 +110,25 @@ def scrape_mhd_tv():
                         "streamLink": stream_link_str,
                         "isHot": True
                     }
+                    
                     matches_data.append(match_item)
-                    
-                except Exception as inner_e:
-                    print(f"Error parsing individual match card: {inner_e}")
-                    
-        else:
-            print(f"Failed to fetch website. Status code: {response.status_code}")
-            
-    except Exception as e:
-        print(f"Error occurred during request: {e}")
+                    write_status("🟢", f"Successfully extracted: {team1_title} vs {team2_title}")
 
-    # ডেটা না পেলে বা ডিবাগিংয়ের জন্য ফলব্যাক স্যাম্পল ডাটা রাখতে পারেন, অথবা ফাঁকা লিস্ট সেव হবে
+                except Exception as card_err:
+                    write_status("🔴", f"Error parsing card #{index + 1}: {str(card_err)}")
+
+            browser.close()
+            write_status("🔵", "Browser closed gracefully.")
+
+        except Exception as e:
+            write_status("🔴", f"CRITICAL ERROR during Playwright execution: {str(e)}")
+
+    # JSON ফাইলে ডেটা সেভ করা
     output_file = "matches.json"
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(matches_data, f, indent=4, ensure_ascii=False)
-    print(f"Successfully saved {len(matches_data)} matches to {output_file}")
+    
+    write_status("🟢", f"Execution finished! Total matches successfully saved to {output_file}: {len(matches_data)}")
 
 if __name__ == "__main__":
     scrape_mhd_tv()
