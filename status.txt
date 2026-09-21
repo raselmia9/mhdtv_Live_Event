@@ -1,14 +1,24 @@
 🎨 MHD TV Scraper Colorful Status Dashboard 🎨
 =============================================
 
-🔵 Starting stealth automation script... Target URL: https://live.mhdtv.online/
-🟡 Launching Chromium with anti-detection flags...
+🔵 Starting deep-diagnostic script... Target URL: https://live.mhdtv.online/
+🟡 Launching browser with enhanced headers and fake geo-location...
 🟡 Navigating to https://live.mhdtv.online/...
-🟡 Waiting 8 seconds for full JavaScript rendering...
-🟢 Page loaded successfully! HTML content length: 118 characters.
-🔴 BLOCKED: The website is still blocking the GitHub Action IP address.
+🔵 HTTP Response Status Code: 200
+🟡 Waiting 8 seconds for full JS rendering and API calls...
+🟢 Page loaded! HTML content length: 118 characters.
+🔴 BLOCK DETECTED: The host server's firewall/proxy filter is rejecting GitHub datacenter IPs.
+⚪ Let's check captured network requests to find direct backend API:
+🔵 Captured URL: https://live.mhdtv.online/
+🔵 Captured URL: https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&family=Stack+Sans+Notch:wght@200..700&display=swap
+🔵 Captured URL: https://live.mhdtv.online/build/assets/app-DwOxQ0aW.css
+🔵 Captured URL: https://live.mhdtv.online/build/assets/app-B3LTBHDJ.js
+🔵 Captured URL: https://www.googletagmanager.com/gtag/js?id=G-BQQ39J7YLY
+🔵 Captured URL: https://mg.livyersroue.com/rOaZ2Mr8TId/ANLEJ
+🔵 Captured URL: https://live.mhdtv.online/storage/images/events/xIFRNnWanelZx6K3a52ycHrrxkRN9WsaUljIXHbd.png
+🔵 Captured URL: https://live.mhdtv.online/storage/images/events/7FgA1xTx7p7lpM88UuzCaJ3rXX7vJUHTcBPBij2E.png
+🔵 Captured URL: https://live.mhdtv.online/storage/images/events/EbBuJI8hu3fmTHpZhEagQ5ady6cDDpIULjo6nVn3.png
+🔵 Captured URL: https://live.mhdtv.online/storage/images/events/jo619s7ts5U8ZWiamakbqiiTE9U1livGWyQ3yBxx.png
 🔵 Total potential match cards detected: 0
-🔴 WARNING: No match cards found! Let's inspect page body snippet.
-⚪ Page body snippet: Anonymous Proxy detected....
 🔵 Browser closed gracefully.
 🟢 Execution finished! Total matches successfully saved to matches.json: 0
