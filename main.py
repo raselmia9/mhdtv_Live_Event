@@ -1,6 +1,5 @@
 import json
 import os
-import requests
 from playwright.sync_api import sync_playwright
 
 def write_status(color_dot, message):
@@ -8,18 +7,6 @@ def write_status(color_dot, message):
     print(log_line)
     with open("status.txt", "a", encoding="utf-8") as f:
         f.write(log_line + "\n")
-
-def get_free_proxy():
-    """ফ্রী প্রক্সি পাওয়ার জন্য একটি পাবলিক প্রক্সি এপিআই ব্যবহার করা"""
-    try:
-        response = requests.get("https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=elite", timeout=5)
-        if response.status_code == 200:
-            proxies = response.text.splitlines()
-            if proxies:
-                return f"http://{proxies[0]}"
-    except:
-        pass
-    return None
 
 def scrape_mhd_tv():
     with open("status.txt", "w", encoding="utf-8") as f:
@@ -29,36 +16,24 @@ def scrape_mhd_tv():
     url = "https://live.mhdtv.online/"
     matches_data = []
 
-    write_status("🔵", "Starting proxy-enabled stealth scraper...")
+    write_status("🔵", "Starting streamlined scraper...")
 
     with sync_playwright() as p:
         try:
-            # একটি ফ্রী প্রক্সি সংগ্রহ করার চেষ্টা
-            proxy_server = get_free_proxy()
-            launch_args = [
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--window-size=1920,1080",
-            ]
-            
-            browser_options = {"headless": True, "args": launch_args}
-            if proxy_server:
-                write_status("🟢", f"Using Proxy to bypass IP block: {proxy_server}")
-                browser_options["proxy"] = {"server": proxy_server}
-            else:
-                write_status("🟡", "No proxy found, running with standard stealth headers...")
-
-            browser = p.chromium.launch(**browser_options)
+            write_status("🟡", "Launching Chromium browser...")
+            browser = p.chromium.launch(
+                headless=True,
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--no-sandbox",
+                    "--disable-setuid-sandbox",
+                    "--window-size=1920,1080",
+                ]
+            )
             
             context = browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-                viewport={"width": 1920, "height": 1080},
-                extra_http_headers={
-                    "Accept-Language": "en-US,en;q=0.9",
-                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-                    "Connection": "keep-alive"
-                }
+                viewport={"width": 1920, "height": 1080}
             )
             
             page = context.new_page()
@@ -67,20 +42,20 @@ def scrape_mhd_tv():
             write_status("🟡", f"Navigating to {url}...")
             page.goto(url, timeout=60000, wait_until="domcontentloaded")
             
-            write_status("🟡", "Waiting 8 seconds for JS rendering...")
-            page.wait_for_timeout(8000)
+            write_status("🟡", "Waiting 6 seconds for page content...")
+            page.wait_for_timeout(6000)
             
             page_content = page.content()
             write_status("🟢", f"Page loaded! HTML content length: {len(page_content)} characters.")
 
             if "Anonymous Proxy detected" in page_content:
-                write_status("🔴", "BLOCKED: Proxy or Datacenter IP detected again.")
+                write_status("🔴", "BLOCK DETECTED: Target server blocked the runner IP.")
             else:
-                write_status("SUCCESS", "Anti-bot proxy block successfully bypassed!")
+                write_status("🟢", "SUCCESS: Page accessed!")
                 
-                # কার্ডগুলো সংগ্রহ করা
+                # কার্ড বা ডেটা খোঁজা
                 match_cards = page.locator("div.match-card, div.card, div[class*='match'], div.grid > div").all()
-                write_status("🔵", f"Total potential match cards detected: {len(match_cards)}")
+                write_status("🔵", f"Total potential cards found: {len(match_cards)}")
 
                 for index, card in enumerate(match_cards):
                     try:
