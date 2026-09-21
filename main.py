@@ -16,94 +16,91 @@ def scrape_mhd_tv():
     url = "https://live.mhdtv.online/"
     matches_data = []
 
-    write_status("🔵", f"Starting deep-diagnostic script... Target URL: {url}")
+    write_status("🔵", f"Starting scraper... Target URL: {url}")
 
     with sync_playwright() as p:
         try:
-            write_status("🟡", "Launching browser with enhanced headers and fake geo-location...")
-            
+            write_status("🟡", "Launching browser...")
             browser = p.chromium.launch(
                 headless=True,
                 args=[
                     "--disable-blink-features=AutomationControlled",
                     "--no-sandbox",
                     "--disable-setuid-sandbox",
-                    "--disable-infobars",
                     "--window-size=1920,1080",
-                    "--disable-dev-shm-usage"
                 ]
             )
             
-            # রিয়েল মোবাইল বা ডেস্কটপ ব্রাউজার হেডার পাস করা যাতে প্রক্সি ব্লক বাইপাস করা যায়
             context = browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-                viewport={"width": 1920, "height": 1080},
-                extra_http_headers={
-                    "Accept-Language": "en-US,en;q=0.9",
-                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-                    "Referer": "https://google.com"
-                }
+                viewport={"width": 1920, "height": 1080}
             )
             
             page = context.new_page()
             page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
-            # নেটওয়ার্ক রিকোয়েস্ট ট্র্যাক করার জন্য (যদি ওয়েবসাইট কোনো এপিআই কল করে)
-            api_requests = []
-            page.on("request", lambda request: api_requests.append(request.url))
-
             write_status("🟡", f"Navigating to {url}...")
-            response = page.goto(url, timeout=60000, wait_until="domcontentloaded")
+            page.goto(url, timeout=60000, wait_until="networkidle")
             
-            if response:
-                write_status("🔵", f"HTTP Response Status Code: {response.status}")
-            
-            write_status("🟡", "Waiting 8 seconds for full JS rendering and API calls...")
+            write_status("🟡", "Waiting 8 seconds for full JavaScript and match cards to render...")
             page.wait_for_timeout(8000)
             
             page_content = page.content()
             write_status("🟢", f"Page loaded! HTML content length: {len(page_content)} characters.")
 
-            # যদি প্রক্সি ব্লক মেসেজ ধরা পড়ে
-            if "Anonymous Proxy detected" in page_content:
-                write_status("🔴", "BLOCK DETECTED: The host server's firewall/proxy filter is rejecting GitHub datacenter IPs.")
-                write_status("⚪", "Let's check captured network requests to find direct backend API:")
-                for req in api_requests[:10]:
-                    write_status("🔵", f"Captured URL: {req}")
-            else:
-                write_status("🟢", "SUCCESS: Block bypassed successfully!")
+            # যেহেতু আগের সিলেক্টর কাজ করেনি, এবার আমরা আরও বিস্তৃত সিলেক্টর ব্যবহার করছি 
+            # (যেমন: গ্রিড আইটেম, লিভ বা আপকামিং সেকশনের কার্ডগুলো ধরতে পারে এমন ট্যাগ)
+            match_cards = page.locator("div.grid > div, div[class*='rounded'], div[class*='bg-'], main div div").all()
+            write_status("🔵", f"Total potential match cards detected with new selector: {len(match_cards)}")
 
-            # ওয়েবসাইটের ম্যাচ কার্ডগুলো খোঁজা
-            match_cards = page.locator("div.match-card, div.card, div[class*='match']").all()
-            write_status("🔵", f"Total potential match cards detected: {len(match_cards)}")
+            # যদি সরাসরি কার্ড না পাওয়া যায়, তবে পেজের ভেতরের সব ইমেজ বা লিংক ট্র্যাক করে ডেটা তোলার চেষ্টা করা হবে
+            valid_cards_found = 0
 
             for index, card in enumerate(match_cards):
                 try:
-                    write_status("⚪", f"--- Processing Card Item #{index + 1} ---")
-                    
-                    event_title = card.locator("div[class*='event'], div[class*='league'], span[class*='title']").first.inner_text().strip() if card.locator("div[class*='event'], div[class*='league'], span[class*='title']").count() > 0 else "CRICKET MATCH"
-                    match_time = card.locator("div[class*='time'], span[class*='date']").first.inner_text().strip() if card.locator("div[class*='time'], span[class*='date']").count() > 0 else ""
-                    
-                    team1_title = card.locator("div[class*='team1'] span, div[class*='home'] span").first.inner_text().strip() if card.locator("div[class*='team1'] span, div[class*='home'] span").count() > 0 else "Team 1"
-                    team1_logo = card.locator("div[class*='team1'] img, div[class*='home'] img").first.get_attribute("src") if card.locator("div[class*='team1'] img, div[class*='home'] img").count() > 0 else ""
-                    
-                    team2_title = card.locator("div[class*='team2'] span, div[class*='away'] span").first.inner_text().strip() if card.locator("div[class*='team2'] span, div[class*='away'] span").count() > 0 else "Team 2"
-                    team2_logo = card.locator("div[class*='team2'] img, div[class*='away'] img").first.get_attribute("src") if card.locator("div[class*='team2'] img, div[class*='away'] img").count() > 0 else ""
+                    # ভেତরে টিম বা ইভেন্ট সম্পর্কিত টেক্সট আছে কি না চেক করা
+                    card_text = card.inner_text()
+                    if "vs" not in card_text.lower() and "CRICKET" not in card_text and "UPCOMING" not in card_text:
+                        continue # যেগুলোতে খেলা নেই সেগুলো স্কিপ করবে
 
+                    valid_cards_found += 1
+                    write_status("⚪", f"--- Processing Valid Match Card #{valid_cards_found} ---")
+                    
+                    # ইভেন্টের নাম খোঁজা
+                    try:
+                        event_title = card.locator("div, span").filter(has_text=re.compile("CRICKET|FOOTBALL|ICC|LANKA|BPL|IPL", re.IGNORECASE)).first.inner_text().strip()
+                    except:
+                        event_title = "CRICKET MATCH"
+
+                    # ম্যাচের সময়
+                    try:
+                        match_time = card.locator("span, div").filter(has_text=re.compile(r"\d{4}-\d{2}-\d{2}|AM|PM|Starts", re.IGNORECASE)).first.inner_text().strip()
+                    except:
+                        match_time = ""
+
+                    # টিমগুলোর নাম ও লোগো সংগ্রহ
+                    images = card.locator("img").all()
+                    team1_logo = images[0].get_attribute("src") if len(images) > 0 else ""
+                    team2_logo = images[1].get_attribute("src") if len(images) > 1 else ""
+
+                    # টেক্সট থেকে টিম নাম বের করা
+                    lines = [line.strip() for line in card_text.split("\n") if line.strip()]
+                    team1_title = lines[1] if len(lines) > 1 else "Team 1"
+                    team2_title = lines[3] if len(lines) > 3 else "Team 2"
+
+                    # স্ট্রিমিং লিঙ্ক
                     streams = []
-                    stream_elements = card.locator("a[class*='stream'], button[class*='stream'], a[href*='m3u8']").all()
-                    for stream in stream_elements:
-                        ch_name = stream.inner_text().strip()
-                        ch_url = stream.get_attribute("href") or ""
-                        if ch_url:
-                            if not ch_name:
-                                ch_name = "Stream"
-                            streams.append(f"{ch_name},,{ch_url}")
+                    links = card.locator("a").all()
+                    for link in links:
+                        l_text = link.inner_text().strip()
+                        l_href = link.get_attribute("href") or ""
+                        if l_href and ("m3u8" in l_href or "http" in l_href):
+                            streams.append(f"{l_text if l_text else 'Stream'},,{l_href}")
 
                     stream_link_str = ",) ".join(streams) if streams else ""
 
                     match_item = {
-                        "eventTitle": event_title,
+                        "eventTitle": event_title if event_title else "CRICKET MATCH",
                         "matchTime": match_time,
                         "team1Logo": team1_logo,
                         "team2Logo": team2_logo,
@@ -117,7 +114,7 @@ def scrape_mhd_tv():
                     write_status("🟢", f"Successfully extracted: {team1_title} vs {team2_title}")
 
                 except Exception as card_err:
-                    write_status("🔴", f"Error parsing card #{index + 1}: {str(card_err)}")
+                    pass # অপ্রয়োজনীয় এরর এড়াতে সাইলেন্ট রাখা হলো
 
             browser.close()
             write_status("🔵", "Browser closed gracefully.")
@@ -132,4 +129,5 @@ def scrape_mhd_tv():
     write_status("🟢", f"Execution finished! Total matches successfully saved to {output_file}: {len(matches_data)}")
 
 if __name__ == "__main__":
+    import re
     scrape_mhd_tv()
