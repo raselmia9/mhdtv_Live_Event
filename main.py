@@ -16,13 +16,12 @@ def scrape_mhd_tv():
     url = "https://live.mhdtv.online/"
     matches_data = []
 
-    write_status("🔵", f"Starting stealth automation script... Target URL: {url}")
+    write_status("🔵", f"Starting deep-diagnostic script... Target URL: {url}")
 
     with sync_playwright() as p:
         try:
-            write_status("🟡", "Launching Chromium with anti-detection flags...")
+            write_status("🟡", "Launching browser with enhanced headers and fake geo-location...")
             
-            # অ্যান্টি-বট ডিটেকশন এড়ানোর জন্য বিশেষ ব্রাউজার আর্গুমেন্টস
             browser = p.chromium.launch(
                 headless=True,
                 args=[
@@ -31,50 +30,58 @@ def scrape_mhd_tv():
                     "--disable-setuid-sandbox",
                     "--disable-infobars",
                     "--window-size=1920,1080",
+                    "--disable-dev-shm-usage"
                 ]
             )
             
-            # রিয়েল ব্রাউজারের মতো কন্টেক্সট তৈরি করা
+            # রিয়েল মোবাইল বা ডেস্কটপ ব্রাউজার হেডার পাস করা যাতে প্রক্সি ব্লক বাইপাস করা যায়
             context = browser.new_context(
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
                 viewport={"width": 1920, "height": 1080},
-                device_scale_factor=1,
-                locale="en-US",
+                extra_http_headers={
+                    "Accept-Language": "en-US,en;q=0.9",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                    "Referer": "https://google.com"
+                }
             )
             
             page = context.new_page()
-            
-            # বট ডিটেকশন স্ক্রিপ্ট ওভাররাইড করা যাতে navigator.webdriver ফলস দেখায়
             page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
+            # নেটওয়ার্ক রিকোয়েস্ট ট্র্যাক করার জন্য (যদি ওয়েবসাইট কোনো এপিআই কল করে)
+            api_requests = []
+            page.on("request", lambda request: api_requests.append(request.url))
+
             write_status("🟡", f"Navigating to {url}...")
-            page.goto(url, timeout=60000, wait_until="networkidle")
+            response = page.goto(url, timeout=60000, wait_until="domcontentloaded")
             
-            write_status("🟡", "Waiting 8 seconds for full JavaScript rendering...")
+            if response:
+                write_status("🔵", f"HTTP Response Status Code: {response.status}")
+            
+            write_status("🟡", "Waiting 8 seconds for full JS rendering and API calls...")
             page.wait_for_timeout(8000)
             
             page_content = page.content()
-            write_status("🟢", f"Page loaded successfully! HTML content length: {len(page_content)} characters.")
+            write_status("🟢", f"Page loaded! HTML content length: {len(page_content)} characters.")
 
-            # যদি প্রটেকশন মেসেজ এখনো থাকে তা চেক করা
+            # যদি প্রক্সি ব্লক মেসেজ ধরা পড়ে
             if "Anonymous Proxy detected" in page_content:
-                write_status("🔴", "BLOCKED: The website is still blocking the GitHub Action IP address.")
+                write_status("🔴", "BLOCK DETECTED: The host server's firewall/proxy filter is rejecting GitHub datacenter IPs.")
+                write_status("⚪", "Let's check captured network requests to find direct backend API:")
+                for req in api_requests[:10]:
+                    write_status("🔵", f"Captured URL: {req}")
             else:
-                write_status("🟢", "SUCCESS: Anti-bot check bypassed successfully!")
+                write_status("🟢", "SUCCESS: Block bypassed successfully!")
 
-            # ওয়েবসাইটের আসল কার্ডগুলোর স্ট্রাকচার অনুযায়ী সিলেক্টর (প্রয়োজনে এটি পরে আরও নিখুঁত করা যাবে)
+            # ওয়েবসাইটের ম্যাচ কার্ডগুলো খোঁজা
             match_cards = page.locator("div.match-card, div.card, div[class*='match']").all()
             write_status("🔵", f"Total potential match cards detected: {len(match_cards)}")
-
-            if len(match_cards) == 0:
-                write_status("🔴", "WARNING: No match cards found! Let's inspect page body snippet.")
-                write_status("⚪", f"Page body snippet: {page.inner_text('body')[:300]}...")
 
             for index, card in enumerate(match_cards):
                 try:
                     write_status("⚪", f"--- Processing Card Item #{index + 1} ---")
                     
-                    event_title = card.locator("div[class*='event'], div[class*='league'], span[class*='title']").first.inner_text().strip()
+                    event_title = card.locator("div[class*='event'], div[class*='league'], span[class*='title']").first.inner_text().strip() if card.locator("div[class*='event'], div[class*='league'], span[class*='title']").count() > 0 else "CRICKET MATCH"
                     match_time = card.locator("div[class*='time'], span[class*='date']").first.inner_text().strip() if card.locator("div[class*='time'], span[class*='date']").count() > 0 else ""
                     
                     team1_title = card.locator("div[class*='team1'] span, div[class*='home'] span").first.inner_text().strip() if card.locator("div[class*='team1'] span, div[class*='home'] span").count() > 0 else "Team 1"
@@ -96,7 +103,7 @@ def scrape_mhd_tv():
                     stream_link_str = ",) ".join(streams) if streams else ""
 
                     match_item = {
-                        "eventTitle": event_title if event_title else "CRICKET MATCH",
+                        "eventTitle": event_title,
                         "matchTime": match_time,
                         "team1Logo": team1_logo,
                         "team2Logo": team2_logo,
