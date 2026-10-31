@@ -4,8 +4,8 @@
 🔵 Starting advanced stealth scraper...
 🟡 Navigating to https://live.mhdtv.online/ with stealth mode...
 🟡 Simulating human interaction (Scrolling & Waiting)...
-🟢 Extracted body text length: 2525 characters.
-🔵 Potential card elements found: 127
+🟢 Extracted body text length: 2910 characters.
+🔵 Potential card elements found: 133
 🟢 Successfully parsed match: WCL Cricket League T20 2026 vs TEAM 1
 🟢 Successfully parsed match: ICC International Test vs South Africa
 🟢 Successfully parsed match: ICC International Test vs Bangladesh
@@ -13,23 +13,25 @@
 🟢 Successfully parsed match: ICC Women's T20 vs Afghanistan
 🟢 Successfully parsed match: ICC International ODI vs India
 🟢 Successfully parsed match: ICC International ODI vs Pakistan
-🟢 Successfully parsed match: France - Ligue 1 vs PSG
-🟢 Successfully parsed match: France - Ligue 1 vs Nice
-🟢 Successfully parsed match: England - Championship vs Sheffield United
-🟢 Successfully parsed match: Spain - La Liga vs Espanyol
 🟢 Successfully parsed match: ICC International ODI vs Sri Lanka
-🟢 Successfully parsed match: Primeira Liga vs Sporting CP
 🟢 Successfully parsed match: England - Premier League vs Chelsea
+🟢 Successfully parsed match: Spain - La Liga vs Atlético
+🟢 Successfully parsed match: Italy - Serie A vs Monza
+🟢 Successfully parsed match: Germany - Bundesliga vs RB Leipzig
 🟢 Successfully parsed match: England - Premier League vs Bournemouth
 🟢 Successfully parsed match: England - Premier League vs Sunderland
 🟢 Successfully parsed match: England - Premier League vs Man City
 🟢 Successfully parsed match: England - Premier League vs Brentford
 🟢 Successfully parsed match: England - Premier League vs Hull
+🟢 Successfully parsed match: Spain - La Liga vs Rayo
+🟢 Successfully parsed match: Italy - Serie A vs Roma
 🟢 Successfully parsed match: England - Premier League vs Crystal
+🟢 Successfully parsed match: Spain - La Liga vs Betis
+🟢 Successfully parsed match: Germany - Bundesliga vs Bayern
 🟢 Successfully parsed match: England - Premier League vs Aston
 🟢 Successfully parsed match: England - Premier League vs Arsenal
 🟢 Successfully parsed match: England - Premier League vs Newcastle
 🟢 Successfully parsed match: SAFF Championship vs India
 🟢 Successfully parsed match: SAFF Championship vs Bangladesh
 🔵 Browser closed.
-🟢 Execution finished! Total matches saved: 25
+🟢 Execution finished! Total matches saved: 27
