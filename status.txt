@@ -4,8 +4,8 @@
 🔵 Starting advanced stealth scraper...
 🟡 Navigating to https://live.mhdtv.online/ with stealth mode...
 🟡 Simulating human interaction (Scrolling & Waiting)...
-🟢 Extracted body text length: 2910 characters.
-🔵 Potential card elements found: 133
+🟢 Extracted body text length: 2875 characters.
+🔵 Potential card elements found: 145
 🟢 Successfully parsed match: WCL Cricket League T20 2026 vs TEAM 1
 🟢 Successfully parsed match: ICC International Test vs South Africa
 🟢 Successfully parsed match: ICC International Test vs Bangladesh
@@ -18,6 +18,7 @@
 🟢 Successfully parsed match: Spain - La Liga vs Atlético
 🟢 Successfully parsed match: Italy - Serie A vs Monza
 🟢 Successfully parsed match: Germany - Bundesliga vs RB Leipzig
+🟢 Successfully parsed match: Germany - Bundesliga vs Stuttgart
 🟢 Successfully parsed match: England - Premier League vs Bournemouth
 🟢 Successfully parsed match: England - Premier League vs Sunderland
 🟢 Successfully parsed match: England - Premier League vs Man City
@@ -28,10 +29,13 @@
 🟢 Successfully parsed match: England - Premier League vs Crystal
 🟢 Successfully parsed match: Spain - La Liga vs Betis
 🟢 Successfully parsed match: Germany - Bundesliga vs Bayern
+🟢 Successfully parsed match: Soudi Pro League vs Al Hilal
+🟢 Successfully parsed match: Italy - Serie A vs Internazionale
 🟢 Successfully parsed match: England - Premier League vs Aston
+🟢 Successfully parsed match: Spain - La Liga vs Barcelona
 🟢 Successfully parsed match: England - Premier League vs Arsenal
 🟢 Successfully parsed match: England - Premier League vs Newcastle
 🟢 Successfully parsed match: SAFF Championship vs India
 🟢 Successfully parsed match: SAFF Championship vs Bangladesh
 🔵 Browser closed.
-🟢 Execution finished! Total matches saved: 27
+🟢 Execution finished! Total matches saved: 31
