@@ -4,8 +4,8 @@
 🔵 Starting advanced stealth scraper...
 🟡 Navigating to https://live.mhdtv.online/ with stealth mode...
 🟡 Simulating human interaction (Scrolling & Waiting)...
-🟢 Extracted body text length: 1924 characters.
-🔵 Potential card elements found: 107
+🟢 Extracted body text length: 2621 characters.
+🔵 Potential card elements found: 122
 🟢 Successfully parsed match: WCL Cricket League T20 2026 vs TEAM 1
 🟢 Successfully parsed match: ICC International Test vs South Africa
 🟢 Successfully parsed match: ODI Tri-series in Pakistan vs England
@@ -13,17 +13,22 @@
 🟢 Successfully parsed match: Hong Kong Sixes 2026 vs Hong Kong Sixes
 🟢 Successfully parsed match: Women's Big Bash 2026 vs Big Bash
 🟢 Successfully parsed match: Nepal Premier League 2026 vs Team A
-🟢 Successfully parsed match: AFC Champions League Elite vs Al Ittihad
-🟢 Successfully parsed match: Italy - Serie A vs Atalanta
 🟢 Successfully parsed match: England - Premier League vs Newcastle
-🟢 Successfully parsed match: Spain - La Liga vs Deportivo
-🟢 Successfully parsed match: Primeira Liga vs Benfica
 🟢 Successfully parsed match: UEFA Champions League vs Sporting CP
 🟢 Successfully parsed match: UEFA Champions League vs Stuttgart
+🟢 Successfully parsed match: UEFA Champions League vs Inter
+🟢 Successfully parsed match: UEFA Champions League vs Bodø/Glimt
+🟢 Successfully parsed match: UEFA Champions League vs Bayern
+🟢 Successfully parsed match: UEFA Champions League vs PSG
+🟢 Successfully parsed match: UEFA Champions League vs Barcelona
+🟢 Successfully parsed match: UEFA Champions League vs Man Utd
+🟢 Successfully parsed match: UEFA Champions League vs LASK
 🟢 Successfully parsed match: ICC International ODI vs India
+🟢 Successfully parsed match: UEFA Champions League vs Liverpool
+🟢 Successfully parsed match: UEFA Champions League vs Real Madrid
 🟢 Successfully parsed match: ICC International Test vs Bangladesh
 🟢 Successfully parsed match: ICC International Test vs Afghanistan
 🟢 Successfully parsed match: SAFF Championship vs India
 🟢 Successfully parsed match: SAFF Championship vs Bangladesh
 🔵 Browser closed.
-🟢 Execution finished! Total matches saved: 19
+🟢 Execution finished! Total matches saved: 24
