@@ -90,16 +90,6 @@
         "isHot": true
     },
     {
-        "eventTitle": "CRICKET",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/4qRMJn0ZkscORhQFRPKaXHLrfXUaFtTWDVOZVmMX.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/FbHhLprk4O2Ijq1AJlbl3C6t2aV0XSRTGdSziqOC.png",
-        "team1Title": "ACC Men's U19 Asia Cup 2026",
-        "team2Title": "INDU19",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
         "eventTitle": "FOOTBALL",
         "matchTime": "UPCOMING",
         "team1Logo": "https://live.mhdtv.online/storage/images/events/Qyz62EzXpyaBBIQUxXO8HQy5N4PjfEplkqXQGee4.png",
@@ -112,80 +102,10 @@
     {
         "eventTitle": "FOOTBALL",
         "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/m5gueBUDMMLvK8QdPwzQOv6tefLxLRNpcGERpruh.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/gEPJuKFrZXik5BI3T4VuMc6Lc3DN0YsMbnePOVP0.png",
-        "team1Title": "Spain - La Liga",
-        "team2Title": "Betis",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
         "team1Logo": "https://live.mhdtv.online/storage/images/events/wq12zIea5TkRlSppue13CckQkkER8Qog85AxuJZw.png",
         "team2Logo": "https://live.mhdtv.online/storage/images/events/2YE5g3MsW8aQUCZNz8mFxtvVXCx4tw0v04aYEtJ4.png",
         "team1Title": "SAFF Championship",
         "team2Title": "Sri Lanka",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/fBFDod0ynDD61Vr17Bm9KoPZ6sI8kpjHY7nN29C9.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/SrS58I8m1RMO9WyNJkeN7GZlMoarLQq3ULLQNzGE.png",
-        "team1Title": "England - Premier League",
-        "team2Title": "Bournemouth",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/9hxNhadhA9P4cjfMN1BE6A7lZCExRR4ZLqhllc0R.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/qeZK8Gk2lwf1WdMCRA88GWjmqCQfYO6t7ObORjok.png",
-        "team1Title": "England - Premier League",
-        "team2Title": "Chelsea",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/ijoPMPzqElc1ueV7NhPBvZ4WcGpezq9NjIX2weXr.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/3bOCWQY0wjwKBPzbPcIwdSW4NSYqc4TpWfsbbrpA.png",
-        "team1Title": "England - Premier League",
-        "team2Title": "Brentford",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/1EVouzWWbo9Iz04qf7t1whSceJ1vnvIh9k4csnXo.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/TCuWKVaeWevTvQVlroZgh3IsVOZ6uqs2YGGRyHvm.png",
-        "team1Title": "England - Premier League",
-        "team2Title": "Liverpool",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/vJdC3AlXODkqMhVlnTZBKjinAAbq4uMsNw5tm8As.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/9sdEY5j28ekWsYWe4k73Qvfb5QFXJY6LiI69I2Gd.png",
-        "team1Title": "Italy - Serie A",
-        "team2Title": "Monza",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/dym3pSxluAHil1ondE7HiiT5SdLPvNKJYYg6Fdh6.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/1dnhXjFClMumuVemUToSMnjn5FrDhMaDcmAacVTO.png",
-        "team1Title": "Italy - Serie A",
-        "team2Title": "Milan",
         "streamLink": "",
         "isHot": true
     },
