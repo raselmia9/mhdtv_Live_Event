@@ -80,16 +80,6 @@
         "isHot": true
     },
     {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/AztzdWuQKQ1xxPUGymI4J6KBXH4OEvqxR9dPucpu.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/NfVAtA8Q5PQSVJyKxxNsjEOXKXh186jHRJSELHNX.png",
-        "team1Title": "Spain - La Liga",
-        "team2Title": "Espanyol",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
         "eventTitle": "CRICKET",
         "matchTime": "UPCOMING",
         "team1Logo": "https://live.mhdtv.online/storage/images/events/LS5gLbhdrc7SoPrQ94I8MM4aGe4OkjzZRHYyyW5W.png",
@@ -100,32 +90,12 @@
         "isHot": true
     },
     {
-        "eventTitle": "FOOTBALL",
+        "eventTitle": "CRICKET",
         "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/vMix4vAHrUtWEJ7GCul82JW1v7Gng9GxrAqKYV0E.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/HzB1OWrc0HhIFcqsk0HBIcekI653eqolLKepKy7m.png",
-        "team1Title": "England - Premier League",
-        "team2Title": "Man City",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/YLWIurrRPW35W1DFapiNJqZr9mEVwWHUaS7cL1Pe.png",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/buekfICKugd3oUvyTempjyeybrUN4ruV4pElaYpz.png",
-        "team1Title": "Spain - La Liga",
-        "team2Title": "Real Madrid",
-        "streamLink": "",
-        "isHot": true
-    },
-    {
-        "eventTitle": "FOOTBALL",
-        "matchTime": "UPCOMING",
-        "team1Logo": "https://live.mhdtv.online/storage/images/events/4fdL2jK0ZVk3ZubzKzR0lNJh8clL2IzE9uaaZ7pN.webp",
-        "team2Logo": "https://live.mhdtv.online/storage/images/events/Vjf8wfifBTEv9qo4b6gv8IKuqBT68pLY1bI9xYzq.webp",
-        "team1Title": "France - Ligue 1",
-        "team2Title": "PSG",
+        "team1Logo": "https://live.mhdtv.online/storage/images/events/4qRMJn0ZkscORhQFRPKaXHLrfXUaFtTWDVOZVmMX.png",
+        "team2Logo": "https://live.mhdtv.online/storage/images/events/FbHhLprk4O2Ijq1AJlbl3C6t2aV0XSRTGdSziqOC.png",
+        "team1Title": "ACC Men's U19 Asia Cup 2026",
+        "team2Title": "INDU19",
         "streamLink": "",
         "isHot": true
     },
