@@ -3,8 +3,8 @@
 
 🔵 Starting advanced stealth scraper...
 🟡 Navigating to https://live.mhdtv.online/ with stealth mode...
-🟡 Simulating human interaction (Scrolling & Waiting)...
-🟢 Extracted body text length: 2666 characters.
-🔵 Potential card elements found: 0
-🔵 Browser closed.
+🔴 CRITICAL ERROR: Page.goto: Timeout 60000ms exceeded.
+Call log:
+  - navigating to "https://live.mhdtv.online/", waiting until "networkidle"
+
 🟢 Execution finished! Total matches saved: 0
